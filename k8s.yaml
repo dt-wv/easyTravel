@@ -1,0 +1,334 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: easytravel
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  namespace: easytravel
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: dynatrace/easytravel-mongodb
+        ports:
+        - containerPort: 27017
+          name: service
+        - containerPort: 28017
+          name: service2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: easytravel-mongodb
+  namespace: easytravel
+  labels:
+    app: mongodb
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+    name: service
+  - port: 28017
+    targetPort: 28017
+    name: service1
+  selector:
+    app: mongodb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: easytravel-backend
+  namespace: easytravel
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: dynatrace/easytravel-backend
+        env:
+          - name: CATALINA_OPTS
+            value: "-Dconfig.apmServerDefault=${ET_APM_SERVER_DEFAULT} -Xmx300m"
+          - name: ET_DATABASE_LOCATION
+            value: "easytravel-mongodb.easytravel.svc.cluster.local:27017"
+          - name: ET_MONGO_AUTH_DB
+            value: "admin"
+          - name: ET_DATABASE_USER
+            value: "etAdmin"
+          - name: ET_DATABASE_PASSWORD
+            value: "adminadmin"
+        ports:
+        - containerPort: 8080
+          name: service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: easytravel-backend
+  namespace: easytravel
+  labels:
+    app: backend
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: service
+  selector:
+    app: backend   
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: easytravel-frontend
+  namespace: easytravel
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: dynatrace/easytravel-frontend
+        env:
+          - name: CATALINA_OPTS
+            value: "-Dconfig.apmServerDefault=${ET_APM_SERVER_DEFAULT} -Xmx525m"
+          - name: ET_BACKEND_URL
+            value: "http://easytravel-backend.easytravel.svc.cluster.local:8080"
+        ports:
+        - containerPort: 8080
+          name: http-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: easytravel-frontend
+  namespace: easytravel
+  labels:
+    app: frontend
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: service
+  selector:
+    app: frontend    
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: easytravel-angular-frontend
+  namespace: easytravel
+  labels:
+    app: angular-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angular-frontend
+  template:
+    metadata:
+      labels:
+        app: angular-frontend
+    spec:
+      containers:
+      - name: angular-frontend
+        image: "dynatrace/easytravel-angular-frontend"
+        env:
+          - name: CATALINA_OPTS
+            value: "-Dconfig.apmServerDefault=${ET_APM_SERVER_DEFAULT} -Xmx525m"
+          - name: ET_BACKEND_URL
+            value: "http://easytravel-backend.easytravel.svc.cluster.local:8080"
+        ports:
+        - containerPort: 8080
+          name: http-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: easytravel-angular-frontend
+  namespace: easytravel
+  labels:
+    app: angular-frontend
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: service
+  selector:
+    app: angular-frontend      
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: easytravel-www
+  namespace: easytravel
+  labels:
+    app: www
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: www
+  template:
+    metadata:
+      labels:
+        app: www
+    spec:
+      containers:
+      - name: www
+        image: "dynatrace/easytravel-nginx"
+        env:
+          - name: ET_FRONTEND_LOCATION
+            value: "easytravel-frontend.easytravel.svc.cluster.local:8080"
+          - name: ET_ANGULAR_FRONTEND_LOCATION
+            value: "easytravel-angular-frontend.easytravel.svc.cluster.local:8080"
+          - name: ET_BACKEND_LOCATION
+            value: "easytravel-backend.easytravel.svc.cluster.local:8080"
+        ports:
+        - containerPort: 80
+          name: http-service
+        - containerPort: 9079
+          name: 9079-service
+        - containerPort: 8080
+          name: 8080-service     
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: headless-customer-loadgen
+  namespace: easytravel
+  labels:
+    app: headless-customer-loadgen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: headless-customer-loadgen
+  template:
+    metadata:
+      labels:
+        app: headless-customer-loadgen
+    spec:
+      hostname: headless-customer-loadgen
+      containers:
+      - name: headless-customer-loadgen
+        image: "dynatrace/easytravel-headless-loadgen"
+        env:
+          - name: ET_FRONTEND_URL
+            value: "http://easytravel-www.easytravel.svc.cluster.local:80"
+          - name: ET_VISIT_NUMBER
+            value: "2"
+          - name: MAX_CHROME_DRIVERS
+            value: "4"
+          - name: SCENARIO_NAME
+            value: "Headless Customer Scenario"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  headless-angular-loadgen
+  namespace: easytravel
+  labels:
+    app:  headless-angular-loadgen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  headless-angular-loadgen
+  template:
+    metadata:
+      labels:
+        app:  headless-angular-loadgen
+    spec:
+      hostname:  headless-angular-loadgen
+      containers:
+      - name:  headless-angular-loadgen
+        image: "dynatrace/easytravel-headless-loadgen"
+        env:
+          - name: ET_FRONTEND_URL
+            value: "http://easytravel-www.easytravel.svc.cluster.local:9079"
+          - name: ET_VISIT_NUMBER
+            value: "2"
+          - name: MAX_CHROME_DRIVERS
+            value: "4"
+          - name: SCENARIO_NAME
+            value: "Headless Angular Scenario"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  loadgen
+  namespace: easytravel
+  labels:
+    app:  loadgen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  loadgen
+  template:
+    metadata:
+      labels:
+        app:  loadgen
+    spec:
+      containers:
+      - name:  loadgen
+        image: "dynatrace/easytravel-loadgen"
+        env:
+          - name: ET_FRONTEND_URL
+            value: "http://easytravel-www.easytravel.svc.cluster.local:80"
+          - name: ET_VISIT_NUMBER
+            value: "2"
+          - name: ET_BACKEND_URL
+            value: "http://easytravel-www.easytravel.svc.cluster.local:8080"
+          - name: ET_PROBLEMS
+            value: "BadCacheSynchronization,CPULoad,DatabaseCleanup,DatabaseSlowdown,FetchSizeTooSmall,JourneySearchError404,JourneySearchError500,LoginProblems,MobileErrors,TravellersOptionBox"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: easytravel-www
+  namespace: easytravel
+  labels:
+    app: www
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: service
+  - port: 9079
+    targetPort: 9079
+    name: service1
+  - port: 8080
+    targetPort: 8080
+    name: service2
+  selector:
+    app: www
