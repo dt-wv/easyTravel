@@ -8,7 +8,29 @@
 
 ## Step 2 - Easytravel application deployment
 `$ sudo su -`  
-`curl -LO https://raw.githubusercontent.com/dt-wv/easyTravel/main/k8s.yaml`   
+`$ curl -LO https://raw.githubusercontent.com/dt-wv/easyTravel/main/k8s.yaml`   
 `# kubectl apply -f k8s.yaml`
 
-## Step 3 - Opentelemetry operator and collector installation
+## Step 3 - install [Cert manager](https://cert-manager.io/docs/installation/kubectl/)
+`# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml`
+
+### Optional step ([verify cert-manager installation](https://cert-manager.io/docs/installation/verify/ ))
+
+## Step 4 - Opentelemetry [operator](https://github.com/open-telemetry/opentelemetry-operator) installation
+`# kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml`  
+
+## Step 5 - Opentelemetry Collector installation
+`# curl –LO https://raw.githubusercontent.com/dt-wv/otel/main/collector/otel-collector-deployment.yml`  
+`# vi otel-collector-deployment.yaml` (add environment-id and API-Token values)    
+`# kubectl apply -f otel-collector-deployment.yaml`  
+
+## Step 6 - Install the Customer resource definition for instrumentation
+`# kubectl apply -f https://raw.githubusercontent.com/dt-wv/otel/main/instrumentation/instrumentation.yml`  
+
+## Step 7 - Patch the EasyTravel spec for autoinstrumentation
+`# kubectl patch deployment easytravel-backend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
+`  
+`# kubectl patch deployment easytravel-frontend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
+`  
+`# kubectl patch deployment easytravel-angular-frontend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
+`  
