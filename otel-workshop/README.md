@@ -8,7 +8,7 @@
 
 ## Step 2 - Easytravel application deployment
 `$ sudo su -`  
-`$ curl -LO https://raw.githubusercontent.com/dt-wv/easyTravel/main/k8s.yaml`   
+`# curl -LO https://raw.githubusercontent.com/dt-wv/easyTravel/main/k8s.yaml`   
 `# kubectl apply -f k8s.yaml`
 
 ## Step 3 - install [Cert manager](https://cert-manager.io/docs/installation/kubectl/)
@@ -34,3 +34,5 @@
 `  
 `# kubectl patch deployment easytravel-angular-frontend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
 `  
+### verify patch has been applied
+`# kubectl describe -n easytravel deployment easytravel-backend `
