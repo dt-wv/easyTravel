@@ -5,7 +5,7 @@
 - Ubuntu20.04 64bit (desktop or server) - 40gb disk, 8GB RAM
 - Installation [Docker, Kind, Kubectl](https://github.com/dt-wv/k8s/tree/main/workshop/README.md)
 - Access internet  
-- Dyanatrace tenant with Admin rights (token creation,...)
+- Dynatrace tenant with Admin rights (token creation,...)
 
 ## Step 2 - Easytravel application deployment
 `$ sudo su -`  
