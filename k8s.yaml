@@ -20,7 +20,7 @@ spec:
       labels:
         app: mongodb
         app.kubernetes.io/name: mongodb
-        app.kubernetes.io/version: 1                
+        app.kubernetes.io/version: v1                
         app.kubernetes.io/part-of: easytravel       
         dt.owner: devops@mycompany.local            
     spec:
@@ -73,7 +73,7 @@ spec:
       labels:
         app: backend
         app.kubernetes.io/name: travel-backend
-        app.kubernetes.io/version: 1                 
+        app.kubernetes.io/version: v1                 
         app.kubernetes.io/part-of: easytravel        
         dt.owner: devops@mycompany.local                        
     spec:
@@ -132,7 +132,7 @@ spec:
       labels:
         app: frontend
         app.kubernetes.io/name: easytravel-frontend
-        app.kubernetes.io/version: 1                  
+        app.kubernetes.io/version: v1                  
         app.kubernetes.io/part-of: easytravel        
         dt.owner: devops@mycompany.local                       
     spec:
@@ -184,7 +184,7 @@ spec:
       labels:
         app: angular-frontend
         app.kubernetes.io/name: angular-frontend
-        app.kubernetes.io/version: 1                  
+        app.kubernetes.io/version: v1                  
         app.kubernetes.io/part-of: easytravel        
         dt.owner: devops@mycompany.local                   
     spec:
@@ -236,7 +236,7 @@ spec:
       labels:
         app: www
         app.kubernetes.io/name: www
-        app.kubernetes.io/version: 1                  
+        app.kubernetes.io/version: v1                  
         app.kubernetes.io/part-of: easytravel      
         dt.owner: devops@mycompany.local 
     spec:
@@ -279,7 +279,7 @@ spec:
       labels:
         app: headless-customer-loadgen
         app.kubernetes.io/name: headless-customer-loadgen
-        app.kubernetes.io/version: 1                 
+        app.kubernetes.io/version: v1                
         app.kubernetes.io/part-of: easytravel        
         dt.owner: devops@mycompany.local                        
     spec:
@@ -318,7 +318,7 @@ spec:
       labels:
         app: headless-angular-loadgen
         app.kubernetes.io/name: headless-angular-loadgen
-        app.kubernetes.io/version: 1                 
+        app.kubernetes.io/version: v1                 
         app.kubernetes.io/part-of: easytravel       
         dt.owner: devops@mycompany.local                       
     spec:
@@ -357,7 +357,7 @@ spec:
       labels:
         app:  loadgen
         app.kubernetes.io/name: "loadgen"
-        app.kubernetes.io/version: 1                  
+        app.kubernetes.io/version: v1                  
         app.kubernetes.io/part-of: "easytravel"        
         dt.owner: "devops@mycompany.local"                        
     spec:
