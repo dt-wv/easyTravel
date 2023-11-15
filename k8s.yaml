@@ -19,10 +19,19 @@ spec:
     metadata:
       labels:
         app: mongodb
+        app.kubernetes.io/name: mongodb
+        app.kubernetes.io/version: 1                // will be identified as version
+        app.kubernetes.io/part-of: easytravel       // will be identified as product
+        dt.owner: devops@mycompany.local            // will be identified as owner
     spec:
       containers:
       - name: mongodb
         image: dynatrace/easytravel-mongodb
+        env:
+        - name: DT_RELEASE_VERSION               // propagates version information on distributed trace
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['app.kubernetes.io/version']
         ports:
         - containerPort: 27017
           name: service
@@ -63,6 +72,10 @@ spec:
     metadata:
       labels:
         app: backend
+        app.kubernetes.io/name: travel-backend
+        app.kubernetes.io/version: 1                  // will be identified as version
+        app.kubernetes.io/part-of: easytravel        // will be identified as product
+        dt.owner: devops@mycompany.local                        // will be identified as owner
     spec:
       containers:
       - name: backend
@@ -78,6 +91,11 @@ spec:
             value: "etAdmin"
           - name: ET_DATABASE_PASSWORD
             value: "adminadmin"
+          - name: DT_RELEASE_VERSION               // propagates version information on distributed trace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/version'] 
+  
         ports:
         - containerPort: 8080
           name: service
@@ -113,6 +131,10 @@ spec:
     metadata:
       labels:
         app: frontend
+        app.kubernetes.io/name: easytravel-frontend
+        app.kubernetes.io/version: 1                  // will be identified as version
+        app.kubernetes.io/part-of: easytravel        // will be identified as product
+        dt.owner: devops@mycompany.local                        // will be identified as owner
     spec:
       containers:
       - name: frontend
@@ -122,6 +144,10 @@ spec:
             value: "-Dconfig.apmServerDefault=${ET_APM_SERVER_DEFAULT} -Xmx525m"
           - name: ET_BACKEND_URL
             value: "http://easytravel-backend.easytravel.svc.cluster.local:8080"
+          - name: DT_RELEASE_VERSION               // propagates version information on distributed trace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/version'] 
         ports:
         - containerPort: 8080
           name: http-service
@@ -157,6 +183,10 @@ spec:
     metadata:
       labels:
         app: angular-frontend
+        app.kubernetes.io/name: angular-frontend
+        app.kubernetes.io/version: 1                  // will be identified as version
+        app.kubernetes.io/part-of: easytravel        // will be identified as product
+        dt.owner: devops@mycompany.local                        // will be identified as owner
     spec:
       containers:
       - name: angular-frontend
@@ -166,6 +196,10 @@ spec:
             value: "-Dconfig.apmServerDefault=${ET_APM_SERVER_DEFAULT} -Xmx525m"
           - name: ET_BACKEND_URL
             value: "http://easytravel-backend.easytravel.svc.cluster.local:8080"
+          - name: DT_RELEASE_VERSION               // propagates version information on distributed trace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/version']
         ports:
         - containerPort: 8080
           name: http-service
@@ -201,6 +235,10 @@ spec:
     metadata:
       labels:
         app: www
+        app.kubernetes.io/name: www
+        app.kubernetes.io/version: 1                  // will be identified as version
+        app.kubernetes.io/part-of: easytravel        // will be identified as product
+        dt.owner: devops@mycompany.local                        // will be identified as owner
     spec:
       containers:
       - name: www
@@ -212,6 +250,10 @@ spec:
             value: "easytravel-angular-frontend.easytravel.svc.cluster.local:8080"
           - name: ET_BACKEND_LOCATION
             value: "easytravel-backend.easytravel.svc.cluster.local:8080"
+          - name: DT_RELEASE_VERSION               // propagates version information on distributed trace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/version']
         ports:
         - containerPort: 80
           name: http-service
@@ -236,6 +278,10 @@ spec:
     metadata:
       labels:
         app: headless-customer-loadgen
+        app.kubernetes.io/name: headless-customer-loadgen
+        app.kubernetes.io/version: 1                  // will be identified as version
+        app.kubernetes.io/part-of: easytravel        // will be identified as product
+        dt.owner: devops@mycompany.local                        // will be identified as owner
     spec:
       hostname: headless-customer-loadgen
       containers:
@@ -250,6 +296,10 @@ spec:
             value: "4"
           - name: SCENARIO_NAME
             value: "Headless Customer Scenario"
+          - name: DT_RELEASE_VERSION               // propagates version information on distributed trace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/version']
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -266,7 +316,11 @@ spec:
   template:
     metadata:
       labels:
-        app:  headless-angular-loadgen
+        app: headless-angular-loadgen
+        app.kubernetes.io/name: headless-angular-loadgen
+        app.kubernetes.io/version: 1                  // will be identified as version
+        app.kubernetes.io/part-of: easytravel        // will be identified as product
+        dt.owner: devops@mycompany.local                        // will be identified as owner
     spec:
       hostname:  headless-angular-loadgen
       containers:
@@ -281,6 +335,10 @@ spec:
             value: "4"
           - name: SCENARIO_NAME
             value: "Headless Angular Scenario"
+          - name: DT_RELEASE_VERSION               // propagates version information on distributed trace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/version']
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -298,6 +356,10 @@ spec:
     metadata:
       labels:
         app:  loadgen
+        app.kubernetes.io/name: loadgen
+        app.kubernetes.io/version: 1                  // will be identified as version
+        app.kubernetes.io/part-of: easytravel        // will be identified as product
+        dt.owner: devops@mycompany.local                        // will be identified as owner
     spec:
       containers:
       - name:  loadgen
@@ -311,6 +373,10 @@ spec:
             value: "http://easytravel-www.easytravel.svc.cluster.local:8080"
           - name: ET_PROBLEMS
             value: "BadCacheSynchronization,CPULoad,DatabaseCleanup,DatabaseSlowdown,FetchSizeTooSmall,JourneySearchError404,JourneySearchError500,LoginProblems,MobileErrors,TravellersOptionBox"
+          - name: DT_RELEASE_VERSION               // propagates version information on distributed trace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/version']
 ---
 apiVersion: v1
 kind: Service
