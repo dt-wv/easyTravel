@@ -32,6 +32,10 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.labels['app.kubernetes.io/version']
+        - name: DT_RELEASE_PRODUCT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/part-of']
         ports:
         - containerPort: 27017
           name: service
@@ -94,7 +98,11 @@ spec:
           - name: DT_RELEASE_VERSION               
             valueFrom:
               fieldRef:
-                fieldPath: metadata.labels['app.kubernetes.io/version'] 
+                fieldPath: metadata.labels['app.kubernetes.io/version']
+          - name: DT_RELEASE_PRODUCT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/part-of']
   
         ports:
         - containerPort: 8080
@@ -147,7 +155,11 @@ spec:
           - name: DT_RELEASE_VERSION              
             valueFrom:
               fieldRef:
-                fieldPath: metadata.labels['app.kubernetes.io/version'] 
+                fieldPath: metadata.labels['app.kubernetes.io/version']
+          - name: DT_RELEASE_PRODUCT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/part-of'] 
         ports:
         - containerPort: 8080
           name: http-service
@@ -200,6 +212,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
+          - name: DT_RELEASE_PRODUCT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/part-of']
         ports:
         - containerPort: 8080
           name: http-service
@@ -254,6 +270,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
+          - name: DT_RELEASE_PRODUCT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/part-of']
         ports:
         - containerPort: 80
           name: http-service
@@ -300,6 +320,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
+          - name: DT_RELEASE_PRODUCT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/part-of']
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -339,6 +363,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
+          - name: DT_RELEASE_PRODUCT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/part-of']
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -377,6 +405,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
+          - name: DT_RELEASE_PRODUCT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/part-of']
 ---
 apiVersion: v1
 kind: Service
