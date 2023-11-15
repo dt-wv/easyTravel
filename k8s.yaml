@@ -22,7 +22,7 @@ spec:
         app.kubernetes.io/name: mongodb
         app.kubernetes.io/version: v1                
         app.kubernetes.io/part-of: easytravel       
-        dt.owner: devops@mycompany.local            
+        dt.owner: devopsteam           
     spec:
       containers:
       - name: mongodb
@@ -75,7 +75,7 @@ spec:
         app.kubernetes.io/name: travel-backend
         app.kubernetes.io/version: v1                 
         app.kubernetes.io/part-of: easytravel        
-        dt.owner: devops@mycompany.local                        
+        dt.owner: devopsteam                        
     spec:
       containers:
       - name: backend
@@ -134,7 +134,7 @@ spec:
         app.kubernetes.io/name: easytravel-frontend
         app.kubernetes.io/version: v1                  
         app.kubernetes.io/part-of: easytravel        
-        dt.owner: devops@mycompany.local                       
+        dt.owner: devopsteam                      
     spec:
       containers:
       - name: frontend
@@ -186,7 +186,7 @@ spec:
         app.kubernetes.io/name: angular-frontend
         app.kubernetes.io/version: v1                  
         app.kubernetes.io/part-of: easytravel        
-        dt.owner: devops@mycompany.local                   
+        dt.owner: devopsteam                   
     spec:
       containers:
       - name: angular-frontend
@@ -238,7 +238,7 @@ spec:
         app.kubernetes.io/name: www
         app.kubernetes.io/version: v1                  
         app.kubernetes.io/part-of: easytravel      
-        dt.owner: devops@mycompany.local 
+        dt.owner: devopsteam 
     spec:
       containers:
       - name: www
@@ -281,7 +281,7 @@ spec:
         app.kubernetes.io/name: headless-customer-loadgen
         app.kubernetes.io/version: v1                
         app.kubernetes.io/part-of: easytravel        
-        dt.owner: devops@mycompany.local                        
+        dt.owner: devopsteam                       
     spec:
       hostname: headless-customer-loadgen
       containers:
@@ -320,7 +320,7 @@ spec:
         app.kubernetes.io/name: headless-angular-loadgen
         app.kubernetes.io/version: v1                 
         app.kubernetes.io/part-of: easytravel       
-        dt.owner: devops@mycompany.local                       
+        dt.owner: devopsteam                      
     spec:
       hostname:  headless-angular-loadgen
       containers:
@@ -359,7 +359,7 @@ spec:
         app.kubernetes.io/name: "loadgen"
         app.kubernetes.io/version: v1                  
         app.kubernetes.io/part-of: "easytravel"        
-        dt.owner: "devops@mycompany.local"                        
+        dt.owner: "devopsteam"                        
     spec:
       containers:
       - name:  loadgen
