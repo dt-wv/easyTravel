@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -20,15 +21,15 @@ spec:
       labels:
         app: mongodb
         app.kubernetes.io/name: mongodb
-        app.kubernetes.io/version: v1                
-        app.kubernetes.io/part-of: easytravel       
-        dt.owner: devopsteam           
+        app.kubernetes.io/version: v1              
+        app.kubernetes.io/part-of: easytravel     
+        dt.owner: devopsteam
     spec:
       containers:
       - name: mongodb
         image: dynatrace/easytravel-mongodb
         env:
-        - name: DT_RELEASE_VERSION               
+        - name: DT_RELEASE_VERSION              
           valueFrom:
             fieldRef:
               fieldPath: metadata.labels['app.kubernetes.io/version']
@@ -77,9 +78,9 @@ spec:
       labels:
         app: backend
         app.kubernetes.io/name: travel-backend
-        app.kubernetes.io/version: v1                 
-        app.kubernetes.io/part-of: easytravel        
-        dt.owner: devopsteam                        
+        app.kubernetes.io/version: v1             
+        app.kubernetes.io/part-of: easytravel   
+        dt.owner: devopsteam                
     spec:
       containers:
       - name: backend
@@ -95,7 +96,7 @@ spec:
             value: "etAdmin"
           - name: ET_DATABASE_PASSWORD
             value: "adminadmin"
-          - name: DT_RELEASE_VERSION               
+          - name: DT_RELEASE_VERSION            
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
@@ -140,9 +141,9 @@ spec:
       labels:
         app: frontend
         app.kubernetes.io/name: easytravel-frontend
-        app.kubernetes.io/version: v1                  
-        app.kubernetes.io/part-of: easytravel        
-        dt.owner: devopsteam                      
+        app.kubernetes.io/version: v1            
+        app.kubernetes.io/part-of: easytravel 
+        dt.owner: devopsteam
     spec:
       containers:
       - name: frontend
@@ -152,14 +153,14 @@ spec:
             value: "-Dconfig.apmServerDefault=${ET_APM_SERVER_DEFAULT} -Xmx525m"
           - name: ET_BACKEND_URL
             value: "http://easytravel-backend.easytravel.svc.cluster.local:8080"
-          - name: DT_RELEASE_VERSION              
+          - name: DT_RELEASE_VERSION          
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
           - name: DT_RELEASE_PRODUCT
             valueFrom:
               fieldRef:
-                fieldPath: metadata.labels['app.kubernetes.io/part-of'] 
+                fieldPath: metadata.labels['app.kubernetes.io/part-of']
         ports:
         - containerPort: 8080
           name: http-service
@@ -196,9 +197,9 @@ spec:
       labels:
         app: angular-frontend
         app.kubernetes.io/name: angular-frontend
-        app.kubernetes.io/version: v1                  
-        app.kubernetes.io/part-of: easytravel        
-        dt.owner: devopsteam                   
+        app.kubernetes.io/version: v1
+        app.kubernetes.io/part-of: easytravel
+        dt.owner: devopsteam
     spec:
       containers:
       - name: angular-frontend
@@ -208,7 +209,7 @@ spec:
             value: "-Dconfig.apmServerDefault=${ET_APM_SERVER_DEFAULT} -Xmx525m"
           - name: ET_BACKEND_URL
             value: "http://easytravel-backend.easytravel.svc.cluster.local:8080"
-          - name: DT_RELEASE_VERSION               
+          - name: DT_RELEASE_VERSION
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
@@ -252,9 +253,9 @@ spec:
       labels:
         app: www
         app.kubernetes.io/name: www
-        app.kubernetes.io/version: v1                  
-        app.kubernetes.io/part-of: easytravel      
-        dt.owner: devopsteam 
+        app.kubernetes.io/version: v1
+        app.kubernetes.io/part-of: easytravel
+        dt.owner: devopsteam
     spec:
       containers:
       - name: www
@@ -266,7 +267,7 @@ spec:
             value: "easytravel-angular-frontend.easytravel.svc.cluster.local:8080"
           - name: ET_BACKEND_LOCATION
             value: "easytravel-backend.easytravel.svc.cluster.local:8080"
-          - name: DT_RELEASE_VERSION          
+          - name: DT_RELEASE_VERSION       
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
@@ -299,9 +300,9 @@ spec:
       labels:
         app: headless-customer-loadgen
         app.kubernetes.io/name: headless-customer-loadgen
-        app.kubernetes.io/version: v1                
-        app.kubernetes.io/part-of: easytravel        
-        dt.owner: devopsteam                       
+        app.kubernetes.io/version: v1
+        app.kubernetes.io/part-of: easytravel
+        dt.owner: devopsteam
     spec:
       hostname: headless-customer-loadgen
       containers:
@@ -316,7 +317,7 @@ spec:
             value: "4"
           - name: SCENARIO_NAME
             value: "Headless Customer Scenario"
-          - name: DT_RELEASE_VERSION               
+          - name: DT_RELEASE_VERSION            
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
@@ -342,9 +343,9 @@ spec:
       labels:
         app: headless-angular-loadgen
         app.kubernetes.io/name: headless-angular-loadgen
-        app.kubernetes.io/version: v1                 
-        app.kubernetes.io/part-of: easytravel       
-        dt.owner: devopsteam                      
+        app.kubernetes.io/version: v1
+        app.kubernetes.io/part-of: easytravel
+        dt.owner: devopsteam
     spec:
       hostname:  headless-angular-loadgen
       containers:
@@ -359,7 +360,7 @@ spec:
             value: "4"
           - name: SCENARIO_NAME
             value: "Headless Angular Scenario"
-          - name: DT_RELEASE_VERSION               
+          - name: DT_RELEASE_VERSION
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
@@ -384,10 +385,10 @@ spec:
     metadata:
       labels:
         app:  loadgen
-        app.kubernetes.io/name: "loadgen"
-        app.kubernetes.io/version: v1                  
-        app.kubernetes.io/part-of: "easytravel"        
-        dt.owner: "devopsteam"                        
+        app.kubernetes.io/name: loadgen
+        app.kubernetes.io/version: v1       
+        app.kubernetes.io/part-of: easytravel
+        dt.owner: devopsteam
     spec:
       containers:
       - name:  loadgen
@@ -401,7 +402,7 @@ spec:
             value: "http://easytravel-www.easytravel.svc.cluster.local:8080"
           - name: ET_PROBLEMS
             value: "BadCacheSynchronization,CPULoad,DatabaseCleanup,DatabaseSlowdown,FetchSizeTooSmall,JourneySearchError404,JourneySearchError500,LoginProblems,MobileErrors,TravellersOptionBox"
-          - name: DT_RELEASE_VERSION              
+          - name: DT_RELEASE_VERSION
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['app.kubernetes.io/version']
