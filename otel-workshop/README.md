@@ -16,12 +16,13 @@
 `# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml`
 
 ### Optional step ([verify cert-manager installation](https://cert-manager.io/docs/installation/verify/ ))
+note: pleas wait 2min until the cert-manager finishes installation  
 
 ## Step 4 - Opentelemetry [operator](https://github.com/open-telemetry/opentelemetry-operator) installation
 `# kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml`  
 
 ## Step 5 - Opentelemetry Collector installation
-`# curl –LO https://raw.githubusercontent.com/dt-wv/otel/main/collector/otel-collector-deployment.yml > otel-collector-deployment.yml`  
+`# curl –LO https://raw.githubusercontent.com/dt-wv/otel/main/collector/otel-collector-deployment.yml > otel-collector-deployment.yaml`  
 `# vi otel-collector-deployment.yaml` (add environment-id and API-Token values)    
 `# kubectl create ns otel-backend`  
 `# kubectl apply -f otel-collector-deployment.yaml`  
