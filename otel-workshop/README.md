@@ -16,7 +16,7 @@
 `# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml`
 
 ### Optional step ([verify cert-manager installation](https://cert-manager.io/docs/installation/verify/ ))
-note: pleas wait 2min until the cert-manager finishes installation  
+note: please wait 2min until the cert-manager finishes installation  
 
 ## Step 4 - Opentelemetry [operator](https://github.com/open-telemetry/opentelemetry-operator) installation
 `# kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml`  
