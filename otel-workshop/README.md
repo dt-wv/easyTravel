@@ -30,7 +30,7 @@ note: pleas wait 2min until the cert-manager finishes installation
 ## Step 6 - Install the Customer resource definition for instrumentation
 `# curl -LO https://raw.githubusercontent.com/dt-wv/otel/main/instrumentation/instrumentation.yml`  
 `# sed -i 's/my-application-namespace/easytravel/g' instrumentation.yml`  
-`# kubectl apply -f instrumentation.yaml` 
+`# kubectl apply -f instrumentation.yml` 
 
 ## Step 7 - Patch the EasyTravel spec for autoinstrumentation
 `# kubectl patch deployment easytravel-backend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
