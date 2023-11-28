@@ -30,12 +30,12 @@ note: please wait 2min until the cert-manager finishes installation
 `# kubectl create ns otel-backend`  
 `# kubectl apply -f otel-collector-deployment.yaml`  
 
-## Step 6 - Install the Customer resource definition for instrumentation
+## Step 6 - Install the Custom Resource Definition (CRD) for instrumentation
 `# curl -LO https://raw.githubusercontent.com/dt-wv/otel/main/instrumentation/instrumentation.yml`  
 `# sed -i 's/my-application-namespace/easytravel/g' instrumentation.yml`  
 `# kubectl apply -f instrumentation.yml` 
 
-## Step 7 - Patch the EasyTravel spec for autoinstrumentation    
+## Step 7 - Patch the EasyTravel spec for auto-instrumentation    
 (patching is required to add the auto-instrumentation annotations to the pod specs where the technology supports it)  
 `# kubectl patch deployment easytravel-backend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
 `  
