@@ -36,7 +36,7 @@ note: please wait 2min until the cert-manager finishes installation
 `# kubectl apply -f instrumentation.yml` 
 
 ## Step 7 - Patch the EasyTravel spec for autoinstrumentation    
-(patching is required to add the auto-instrumentation annotations to the pod specs where the technology supports it)
+(patching is required to add the auto-instrumentation annotations to the pod specs where the technology supports it)  
 `# kubectl patch deployment easytravel-backend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
 `  
 `# kubectl patch deployment easytravel-frontend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
