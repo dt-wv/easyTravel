@@ -10,7 +10,7 @@
 ## Step 2 - Easytravel application deployment
 `$ sudo su -`  
 `# curl -LO https://raw.githubusercontent.com/dt-wv/easyTravel/main/k8s.yaml`   
-`# kubectl apply -f k8s.yaml`
+`# kubectl apply -f k8s.yaml`   
 `# sleep 120 && kubectl get pods -n easytravel`  
 
 ## Step 3 - install [Cert manager](https://cert-manager.io/docs/installation/kubectl/)
@@ -35,7 +35,8 @@ note: please wait 2min until the cert-manager finishes installation
 `# sed -i 's/my-application-namespace/easytravel/g' instrumentation.yml`  
 `# kubectl apply -f instrumentation.yml` 
 
-## Step 7 - Patch the EasyTravel spec for autoinstrumentation (patching is required to add the auto-instrumentation annotations to the pod specs where the technology supports it)
+## Step 7 - Patch the EasyTravel spec for autoinstrumentation    
+(patching is required to add the auto-instrumentation annotations to the pod specs where the technology supports it)
 `# kubectl patch deployment easytravel-backend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
 `  
 `# kubectl patch deployment easytravel-frontend -n easytravel -p '{"spec": {"template":{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-java":"true"}}}} }'
@@ -48,7 +49,7 @@ note: please wait 2min until the cert-manager finishes installation
 ### verify patch has been applied
 `# kubectl describe -n easytravel deployment easytravel-backend `
 
-### verify in Dynatrace - Distributed traces -> ingested traces
+## Step 8 - verify in Dynatrace - Distributed traces -> ingested traces
 ### Troubleshooting
 Get the name of the otel-collector pod:  
 `# kubectl get pod -n otel-backend`  
