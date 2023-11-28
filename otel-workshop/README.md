@@ -14,7 +14,7 @@
 `# sleep 120 && kubectl get pods -n easytravel`  
 
 ## Step 3 - install [Cert manager](https://cert-manager.io/docs/installation/kubectl/)
-`# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml`
+`# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml`  
 `# sleep 120 && kubectl get pods -n cert-manager`  
 note: please wait 2min until the cert-manager finishes installation
 
